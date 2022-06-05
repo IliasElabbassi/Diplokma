@@ -18,6 +18,7 @@ contract diploma {
         string date;
         string location;
         string mention;
+        uint256 createdAt;
     }
 
     Degree[] all_degrees;
@@ -40,7 +41,7 @@ contract diploma {
     modifier onlyOwner() {
         require(
             msg.sender == owner,
-            "you cant use this function"
+            "you cant use this function, only owner of the contract can."
         );
         _; // will execute the function that this modifier is attached to here
     }
@@ -52,7 +53,7 @@ contract diploma {
     modifier onlyCreators() {
         require(
             allowed_creator[msg.sender],
-            "you cant use this function"
+            "you cant use this function, only certifie creator can."
         );
         _;
     }
@@ -79,6 +80,7 @@ contract diploma {
         degree.date = _date;
         degree.location = _location;
         degree.mention = _mention;
+        degree.createdAt = block.timestamp;
 
         addressToDegree[_to].push(degree);
         all_degrees.push(degree);
@@ -113,4 +115,14 @@ contract diploma {
     function name() public view returns (string memory){
         return title;
     }
+
+    function getAllowedCreatorByAddress(address _creator) public view returns(bool) {
+        return allowed_creator[_creator];
+    }
+
+    // function getAllowedCreators() public view returns(address[] memory){
+    //     address[] toReturn;
+    //     // TODO: search in AllowedCreator all address where allowed is True and append it to toReturn
+    //     return toReturn;
+    // }
 }
