@@ -185,7 +185,17 @@ describe("Diploma", function() {
         })
     })
 
-    describe("others test", function(){
+    describe("Institute", function(){
+        it("should create an institute", async function(){
+            const addCreatorTx = await diploma.addCreator(addr1.address, "LILLE 1 FST", "FRANCE")
+            
+            const institute = await diploma.getInstituteFromAddress(addr1.address)
+
+            expect(institute["name"]).to.equal("LILLE 1 FST");
+            expect(institute["country"]).to.equal("FRANCE");
+            expect(institute["allowed"]).to.equal(true);
+        })
+
         it("should get all institute", async function(){
             const addCreatorTx = await diploma.addCreator(addr1.address, "LILLE 1 FST", "FRANCE")
             const addCreator2Tx = await diploma.addCreator(addr2.address, "Seoul national university", "Korea")
@@ -195,5 +205,10 @@ describe("Diploma", function() {
             expect(allCreators[0]["name"]).to.equal("LILLE 1 FST");
             expect(allCreators[1]["name"]).to.equal("Seoul national university");
         })
+
+    })
+
+    describe("others test", function(){
+        
     })
 })  

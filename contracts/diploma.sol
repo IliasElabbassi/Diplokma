@@ -26,7 +26,6 @@ contract diploma {
         string country;
         address instAddress;
         bool allowed;
-        bool valid;
     }
 
     Degree[] all_degrees;
@@ -112,7 +111,6 @@ contract diploma {
         inst.country = _country;
         inst.name = _name;
         inst.allowed = true;
-        inst.valid = true;
 
         addressToInstitute[_creator] = inst;
         allowed_creator[_creator] = true;
@@ -151,7 +149,7 @@ contract diploma {
         return all_degrees;
     }
 
-    function getLength() public view returns (uint){
+    function getAllDegreeLength() public view returns (uint){
         return all_degrees.length;
     }    
 
