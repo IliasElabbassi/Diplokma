@@ -2,6 +2,7 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("Diploma", function() {
+    var should = require('chai').should();
     let Diploma, diploma, owner, addr1, addr2
 
     beforeEach(async ()=>{
@@ -64,16 +65,6 @@ describe("Diploma", function() {
             expect(allowe3dTx).to.equal(true);
         })
 
-        it("should get all institute", async function(){
-            const addCreatorTx = await diploma.addCreator(addr1.address, "LILLE 1 FST", "FRANCE")
-            const addCreator2Tx = await diploma.addCreator(addr2.address, "Seoul national university", "Korea")
-            
-            const allCreators = await diploma.getAllInstitutes()
-
-            expect(allCreators[0]["name"]).to.equal("LILLE 1 FST");
-            expect(allCreators[1]["name"]).to.equal("Seoul national university");
-        })
-
         it("should not be able to run addCreator function", async function(){
             await expect(
                 diploma.connect(addr1).addCreator(addr2.address, "LILLE 1 FST", "FRANCE")
@@ -96,6 +87,22 @@ describe("Diploma", function() {
     })
 
     describe("Creator only functions", function(){
+        it("should be able to run createDegree creator only functions", async function(){
+            await diploma.addCreator(addr1.address, "LILLE 1 FST", "FRANCE")
+
+            const tx = await diploma.connect(addr1).createDegree(
+                "Diploma very first degree",
+                addr2.address,
+                "Bae",
+                "Kang",
+                "27/05/2022",
+                "Jakarta",
+                "Trés Bien"
+            )
+            
+            should.exist(tx)
+        })
+
         it("should not be able to use creator only functions", async function(){
             await expect(
                 diploma.createDegree(
@@ -179,6 +186,14 @@ describe("Diploma", function() {
     })
 
     describe("others test", function(){
+        it("should get all institute", async function(){
+            const addCreatorTx = await diploma.addCreator(addr1.address, "LILLE 1 FST", "FRANCE")
+            const addCreator2Tx = await diploma.addCreator(addr2.address, "Seoul national university", "Korea")
+            
+            const allCreators = await diploma.getAllInstitutes()
 
+            expect(allCreators[0]["name"]).to.equal("LILLE 1 FST");
+            expect(allCreators[1]["name"]).to.equal("Seoul national university");
+        })
     })
 })  
