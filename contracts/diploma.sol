@@ -21,9 +21,19 @@ contract diploma {
         uint256 createdAt;
     }
 
+    struct Institute {
+        string name;
+        string country;
+        address instAddress;
+        bool allowed;
+        bool valid;
+    }
+
     Degree[] all_degrees;
+    Institute[] all_institute;
     mapping(address => Degree[]) addressToDegree;
     mapping(address => bool) allowed_creator;
+    mapping(address => Institute) addressToInstitute;
 
     constructor(){
         owner = msg.sender;
@@ -32,7 +42,8 @@ contract diploma {
     //events
     event degreeCreated(address _creator, address _graduate, string _title);
     event creatorCreated(address _creator, string _name);
-    event creatorDeleted(address _creator, string _reason);
+    event creatorDeleted(address _creator, string _name);
+    event allowedCreator(address _creator, string _name);
 
     /**
         Owner only modifier.
@@ -85,21 +96,51 @@ contract diploma {
         addressToDegree[_to].push(degree);
         all_degrees.push(degree);
 
+        emit degreeCreated(msg.sender, _to, _title);
+
         return true;
     }
 
     /**
         Allows the owner to add a creator to the allowed creator list
     */
-    function addCreator(address _creator) onlyOwner public{
+    function addCreator(address _creator, string memory _name, string memory _country) onlyOwner public{
+        // if their is already a creator with the same address the function should throw
+        // if(addressToInstitute[_creator].allowed) revert("this address is already used.");
+
+        Institute memory inst;
+        inst.country = _country;
+        inst.name = _name;
+        inst.allowed = true;
+        inst.valid = true;
+
+        addressToInstitute[_creator] = inst;
         allowed_creator[_creator] = true;
+
+        all_institute.push(inst);
+
+        emit creatorCreated(_creator, _name);
     }
 
     /**
         Allows the owner to delete a creator from the allowed creator list
     */
     function deleteCreator(address _creator) onlyOwner public{
+        // if(!addressToInstitute[_creator].allowed) revert("No creator with this address.");
+
         allowed_creator[_creator] = false;
+        addressToInstitute[_creator].allowed = false;
+
+        emit creatorDeleted(_creator, addressToInstitute[_creator].name);
+    }
+
+    function allowCreator(address _creator) onlyOwner public{
+        // if(!addressToInstitute[_creator].allowed) revert("No creator with this address.");
+
+        allowed_creator[_creator] = true;
+        addressToInstitute[_creator].allowed = true;
+
+        emit allowedCreator(_creator, addressToInstitute[_creator].name);
     }
 
     function getOwner() public view returns(address) {
@@ -128,11 +169,23 @@ contract diploma {
 
     function getDegreeLengthFromAddress(address _owner) public view returns (uint){
         return addressToDegree[_owner].length;
-    }  
+    }
 
-    // function getAllowedCreators() public view returns(address[] memory){
-    //     address[] toReturn;
-    //     // TODO: search in AllowedCreator all address where allowed is True and append it to toReturn
-    //     return toReturn;
-    // }
+    function  getInstituteFromAddress(address _institute) public view returns(Institute memory){
+        return addressToInstitute[_institute];
+    }
+
+    function getAllInstitutes() public view returns(Institute[] memory){
+        return all_institute;
+    }
+
+    function getAllowedCreators() public view returns(address[] memory){
+        address[] memory toReturn;
+
+        for(uint i; i < all_institute.length; i++)
+            if(all_institute[i].allowed == true)
+                toReturn[i] = all_institute[i].instAddress;
+
+        return toReturn;
+    }
 }

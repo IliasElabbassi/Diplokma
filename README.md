@@ -33,3 +33,9 @@ yarn start
 
 ### TODO
 
+- create inteface to view all diplomas
+- create interface to view diploma from a specific address
+- create interface to create a diploma
+- create interface to add/delete an institute
+- create institure interface
+    - in this interface : add diplomas

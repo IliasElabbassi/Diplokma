@@ -1,8 +1,10 @@
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {Grid, Col, Row} from 'react-bootstrap'
 import { useEffect, useState } from "react";
 
 import getBlockchain from '../ethereum.js';
 
-import "./style/bg.css"
+import NotFound from './404'
 
 function App() {
   const [address, setAddress] = useState(undefined)
@@ -23,23 +25,31 @@ function App() {
   if(typeof diploma === 'undefined'){
     return (
       <div className="App">
-        <section className="bg">
-          <h1 className="bgh1">
+        <section>
+          <h1>
             Diplokma <br></br>
             Please use an app like metamask<br></br>
-            to connect to the ethereum newtork
+            to connect to the ethereum newtork<br></br>
+            <a href="https://metamask.zendesk.com/hc/en-us/articles/360015489531-Getting-Started-With-MetaMask">check here</a>
           </h1>
         </section>
       </div>
     )
   }
   return (
-    <div className="App">
-      <section className="bg">
-        <h1 className="bgh1">
-          Diplokma
-        </h1>
-      </section>
+    <div className="container">
+      <BrowserRouter>
+        <Routes>
+              <Route element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+        <div>
+          <Col style={{textAlign: "right"}}>licence <a href='https://mit-license.org/'>MIT</a></Col>
+          <Col style={{textAlign: "right"}}>By Ilias El abbassi</Col>
+          <Col style={{textAlign: "right"}}>iliaselabbassi@outlook.fr</Col>
+          <Col style={{textAlign: "right"}}><a href='https://github.com/IliasElabbassi'>github</a></Col>
+        </div>
+
     </div>
   );
 }

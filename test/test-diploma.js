@@ -34,7 +34,7 @@ describe("Diploma", function() {
         })
 
         it("should add a creator", async function(){
-            const addCreatorTx = await diploma.addCreator(addr1.address)
+            const addCreatorTx = await diploma.addCreator(addr1.address, "LILLE 1 FST", "FRANCE")
             const allowedTx = await diploma.getAllowedCreatorByAddress(addr1.address)
 
             expect(allowedTx).to.equal(true);
@@ -47,13 +47,40 @@ describe("Diploma", function() {
             expect(allowedTx).to.equal(false);
         })
 
+        it("should revoque and give back authorization to a creator", async function(){
+            const addCreatorTx = await diploma.addCreator(addr1.address, "LILLE 1 FST", "FRANCE")
+            const allowedTx = await diploma.getAllowedCreatorByAddress(addr1.address)
+
+            expect(allowedTx).to.equal(true);
+
+            const deleteCreatorTx = await diploma.deleteCreator(addr1.address)
+            const allowed2Tx = await diploma.getAllowedCreatorByAddress(addr1.address)
+
+            expect(allowed2Tx).to.equal(false);
+
+            const giveBackTx = await diploma.allowCreator(addr1.address)
+            const allowe3dTx = await diploma.getAllowedCreatorByAddress(addr1.address)
+
+            expect(allowe3dTx).to.equal(true);
+        })
+
+        it("should get all institute", async function(){
+            const addCreatorTx = await diploma.addCreator(addr1.address, "LILLE 1 FST", "FRANCE")
+            const addCreator2Tx = await diploma.addCreator(addr2.address, "Seoul national university", "Korea")
+            
+            const allCreators = await diploma.getAllInstitutes()
+
+            expect(allCreators[0]["name"]).to.equal("LILLE 1 FST");
+            expect(allCreators[1]["name"]).to.equal("Seoul national university");
+        })
+
         it("should not be able to run addCreator function", async function(){
             await expect(
-                diploma.connect(addr1).addCreator(addr2.address)
+                diploma.connect(addr1).addCreator(addr2.address, "LILLE 1 FST", "FRANCE")
             ).to.be.revertedWith("you cant use this function, only owner of the contract can.")
        
             await expect(
-                diploma.connect(addr2).addCreator(addr1.address)
+                diploma.connect(addr2).addCreator(addr1.address, "Seoul national university", "Korea")
             ).to.be.revertedWith("you cant use this function, only owner of the contract can.")
         })
 
@@ -82,29 +109,11 @@ describe("Diploma", function() {
                 )
             ).to.be.revertedWith("you cant use this function, only certifie creator can.")
         })
-
-        it("should be able to add a degreee", async function(){
-            await diploma.addCreator(addr1.address)
-            
-            const addDegreeTx = diploma.connect(addr1).createDegree(
-                "Diploma very first degree",
-                addr2.address,
-                "Bae",
-                "Kang",
-                "27/05/2022",
-                "Jakarta",
-                "Trés Bien"
-            )
-
-            // check if tx sucsessfull
-            // retrieve created degree
-            // check if all the info are correct
-        })
     })
 
     describe("Degree", function(){
         it("degree should be added to degree list", async function(){
-            await diploma.addCreator(addr1.address)
+            await diploma.addCreator(addr1.address, "LILLE 1 FST", "FRANCE")
             
             const addDegreeTx = await diploma.connect(addr1).createDegree(
                 "Diploma very first degree",
@@ -129,7 +138,8 @@ describe("Diploma", function() {
         })
 
         it("should retrieve all degrees from an address", async function(){
-            await diploma.addCreator(addr1.address)
+            await diploma.addCreator(addr1.address, "LILLE 1 FST", "FRANCE")
+
             
             const addDegreeTx = await diploma.connect(addr1).createDegree(
                 "Diploma very first degree",
@@ -166,5 +176,9 @@ describe("Diploma", function() {
 
             expect(degreeLengthTx).to.equal(3);
         })
+    })
+
+    describe("others test", function(){
+
     })
 })  
