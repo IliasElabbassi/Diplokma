@@ -106,7 +106,32 @@ describe("Diploma", function() {
         it("degree should be added to degree list", async function(){
             await diploma.addCreator(addr1.address)
             
-            const addDegreeTx = diploma.connect(addr1).createDegree(
+            const addDegreeTx = await diploma.connect(addr1).createDegree(
+                "Diploma very first degree",
+                addr2.address,
+                "Bae",
+                "Kang",
+                "27/05/2022",
+                "Jakarta",
+                "Trés Bien"
+            )
+            
+            // get degree created
+            const degreeTx = await diploma.getAllDegreeFromAddress(addr2.address);
+
+            expect(degreeTx[0]["title"]).to.equal("Diploma very first degree");
+            expect(degreeTx[0]["graduate_adress"]).to.equal(addr2.address);
+            expect(degreeTx[0]["firstName"]).to.equal("Bae");
+            expect(degreeTx[0]["lastName"]).to.equal("Kang");
+            expect(degreeTx[0]["date"]).to.equal("27/05/2022");
+            expect(degreeTx[0]["location"]).to.equal("Jakarta");
+            expect(degreeTx[0]["mention"]).to.equal("Trés Bien");
+        })
+
+        it("should retrieve all degrees from an address", async function(){
+            await diploma.addCreator(addr1.address)
+            
+            const addDegreeTx = await diploma.connect(addr1).createDegree(
                 "Diploma very first degree",
                 addr2.address,
                 "Bae",
@@ -116,16 +141,30 @@ describe("Diploma", function() {
                 "Trés Bien"
             )
 
-            // check if tx sucsessfull
-            // check if degree is added in list
-        })
+            const addDegree2Tx = await diploma.connect(addr1).createDegree(
+                "Diploma second degree",
+                addr2.address,
+                "Kim",
+                "Park",
+                "27/05/2022",
+                "Casablanca",
+                "Trés Bien"
+            )
 
-        it("should retrieve all degrees from an address", async function(){
-
-        })
-
-        it("should get all the degrees", async function(){
+            const addDegree3Tx = await diploma.connect(addr1).createDegree(
+                "Diploma third degree",
+                addr2.address,
+                "R",
+                "V",
+                "27/05/2022",
+                "Lille",
+                "Trés Bien"
+            )
             
+            // get count of degree from addr2
+            const degreeLengthTx = await diploma.getDegreeLengthFromAddress(addr2.address);
+
+            expect(degreeLengthTx).to.equal(3);
         })
     })
 })  

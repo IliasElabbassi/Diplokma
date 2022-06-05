@@ -69,7 +69,7 @@ contract diploma {
         string memory _date,
         string memory _location,
         string memory _mention
-    ) onlyCreators public {
+    ) onlyCreators public returns(bool){
         Degree memory degree;
 
         degree.title = _title;
@@ -84,6 +84,8 @@ contract diploma {
 
         addressToDegree[_to].push(degree);
         all_degrees.push(degree);
+
+        return true;
     }
 
     /**
@@ -119,6 +121,14 @@ contract diploma {
     function getAllowedCreatorByAddress(address _creator) public view returns(bool) {
         return allowed_creator[_creator];
     }
+
+    function getAllDegreeFromAddress(address _owner) public view returns(Degree[] memory) {
+        return addressToDegree[_owner];
+    }
+
+    function getDegreeLengthFromAddress(address _owner) public view returns (uint){
+        return addressToDegree[_owner].length;
+    }  
 
     // function getAllowedCreators() public view returns(address[] memory){
     //     address[] toReturn;
