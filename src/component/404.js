@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import "./style/bg.css"
 
-function Navbar() {
+function Error404() {
     return (
         <div className="container NotFound">
             <section className="bg">
@@ -12,4 +12,4 @@ function Navbar() {
     )
 }
 
-export default Navbar;
+export default Error404;

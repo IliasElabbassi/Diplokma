@@ -1,10 +1,11 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import {Grid, Col, Row} from 'react-bootstrap'
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import {Col} from 'react-bootstrap'
 
 import getBlockchain from '../ethereum.js';
 
-import NotFound from './404'
+import NavbarComponent from './Navbar'
+import Error404 from './404'
 
 function App() {
   const [address, setAddress] = useState(undefined)
@@ -39,8 +40,9 @@ function App() {
   return (
     <div className="container">
       <BrowserRouter>
+        <NavbarComponent address={address} /> 
         <Routes>
-              <Route element={<NotFound />} />
+              <Route element={<Error404 />} />
           </Routes>
         </BrowserRouter>
         <div>
