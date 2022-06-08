@@ -4,7 +4,7 @@ import {Col} from 'react-bootstrap'
 
 import getBlockchain from '../ethereum.js';
 
-import Manage_institute from './Manage_institute'
+import Manage_institute from './institute/Manage_institute'
 import NavbarComponent from './Navbar'
 import Diplomas from './diplomas'
 import Error404 from './404'
