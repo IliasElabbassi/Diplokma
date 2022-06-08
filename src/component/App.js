@@ -28,7 +28,7 @@ function App() {
   if(typeof diploma === 'undefined'){
     return (
       <div className="App">
-        <section>
+        <section className='meta_info text-center'>
           <h1>
             Diplokma <br></br>
             Please use an app like metamask<br></br>
