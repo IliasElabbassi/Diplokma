@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { MDBCol } from "mdbreact";
 
-import { Card } from "react-bootstrap";
-
 import "./style/diplomas.css"
 
-function Diplomas() {
+function Diplomas(props) {
     const [diploma, setDiploma] = useState(undefined)
     const [diplomas_list, setDiplomasList] = useState([])
+
+    useEffect(()=>{
+        setDiploma(props.diploma)
+        getDiplomas()
+    }, [props.diploma])
+
+    async function getDiplomas(){
+        try {
+            const diplomasTx = diploma.getAllDegrees()
+            setDiplomasList(diplomasTx)
+            console.log(diplomas_list)
+        }catch(err){
+            console.error("[Diplomas.js] getDiplomas() : "+err)
+        }
+    }
 
     return (
         <div className="container">

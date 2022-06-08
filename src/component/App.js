@@ -4,9 +4,10 @@ import {Col} from 'react-bootstrap'
 
 import getBlockchain from '../ethereum.js';
 
+import Manage_institute from './Manage_institute'
 import NavbarComponent from './Navbar'
-import Error404 from './404'
 import Diplomas from './diplomas'
+import Error404 from './404'
 
 import './style/app.css'
 
@@ -46,6 +47,9 @@ function App() {
         <NavbarComponent address={address} /> 
         <Routes>
             <Route path='/diplomas' element={<Diplomas />} />
+            <Route path='/managing/institute' element={<Manage_institute
+                                                              diploma={diploma}
+                                                              address={address} />} />
             <Route element={<Error404 />} />
           </Routes>
         </BrowserRouter>
