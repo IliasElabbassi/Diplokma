@@ -4,6 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import Create_institute from "./create_institute"
 import Revoke_institute from "./revoke_nstitute"
 import Allow_institute from "./Allow_institute"
+import List_institute from "./list_institute";
 
 import '../style/institute.css'
 
@@ -20,8 +21,8 @@ function Manage_institute(props) {
         <div className="container">
             {
             (connectedAddress === "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")?(
-                <div>
-                    <Row className="manager">
+                <div className="inst_manager">
+                    <Row>
                         <Col md={4}>
                             <Create_institute diploma={diploma} />
                         </Col>
@@ -40,6 +41,9 @@ function Manage_institute(props) {
                 </div>
             )
             }
+            <hr></hr>
+            <p><b>List of all institues</b></p>
+            <List_institute diploma={diploma} />
         </div>
     )
 }

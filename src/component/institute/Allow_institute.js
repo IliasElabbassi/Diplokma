@@ -1,35 +1,58 @@
-import {Form, Col, Row, Button, Alert} from 'react-bootstrap'
+import {Form, Col, Button, Card, Alert} from 'react-bootstrap'
 import React, { useEffect, useState } from "react";
 
 function Allow_institute(props) {
     const [diploma, setDiploma] = useState(undefined)
     const [instituteAddress, setInstituteAddress] = useState(undefined)
+    const [allowTx, setTx] = useState(undefined)
+    const [alertOn, setAlert] = useState(false)
 
     useEffect(()=>{
         setDiploma(props.diploma)
     }, [props.diploma])
 
-    function allow(){
+    async function allow(){
         try{
-            console.log(instituteAddress)
+            const allowTx = await diploma.allowCreator(instituteAddress)
+            handleAlertShow()
+            setTx(allowTx.hash)
+            console.log(allowTx)
         }catch(err){
             console.error("[Allow_Institute] allow() : "+err)
         }
     }
 
+    const handleAlertClose = () => setAlert(false);
+    const handleAlertShow = () => setAlert(true);
+
     return (
         <div className="container">
-            <Form.Group className="mb-3" controlId="formPlaintextTitle">
-                <p><b>Allow institute</b></p>
-                <Form.Label column >
-                    Institute address
-                </Form.Label>
-                <Col>
-                    <Form.Control  defaultValue="ethereum address" onChange={(e) => setInstituteAddress(e.target.value)} />
-                </Col>
-            </Form.Group>
-
-            <Button variant="primary" onClick={() => allow()}>allow</Button>&nbsp;
+            <Alert variant="success" hidden={!alertOn} transition >
+                <Alert.Heading>Institute allowed !</Alert.Heading>
+                <p>at : {allowTx}</p>
+                <hr/>
+                <div className="d-flex justify-content-end">
+                <Button onClick={() => handleAlertClose()} variant="outline-success">
+                    Close
+                </Button>
+                </div>
+            </Alert>
+            <Card>
+            <Card.Body>
+                <Card.Title>Allow institute</Card.Title>
+                <Card.Text>
+                    <Form.Group className="mb-3" controlId="formPlaintextTitle">
+                        <Form.Label column >
+                            Institute address
+                        </Form.Label>
+                        <Col>
+                            <Form.Control  defaultValue="ethereum address" onChange={(e) => setInstituteAddress(e.target.value)} />
+                        </Col>
+                    </Form.Group>
+                    <Button variant="primary" onClick={() => allow()}>allow</Button>&nbsp;
+                </Card.Text>
+            </Card.Body>
+            </Card>
         </div>
     )
 }

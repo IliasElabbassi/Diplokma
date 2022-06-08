@@ -1,35 +1,58 @@
 import React, { useEffect, useState } from "react";
-import {Form, Col, Row, Button, Alert} from 'react-bootstrap'
+import {Form, Col, Button, Card, Alert} from 'react-bootstrap'
 
 function Revoke_institute(props) {
     const [diploma, setDiploma] = useState(undefined)
     const [instituteAddress, setInstituteAddress] = useState(undefined)
+    const [revokeTx, setTx] = useState(undefined)
+    const [alertOn, setAlert] = useState(false)
 
     useEffect(()=>{
         setDiploma(props.diploma)
     }, [props.diploma])
 
-    function revoke(){
+    async function revoke(){
         try{
-            console.log(instituteAddress)
+            const revokeTx = await diploma.deleteCreator(instituteAddress)
+            handleAlertShow()
+            console.log(revokeTx)
         }catch(err){
             console.error("[Revoke_Institute] revoke() : "+err)
         }
     }
+    
+    const handleAlertClose = () => setAlert(false);
+    const handleAlertShow = () => setAlert(true);
 
     return (
         <div className="container">
-            <Form.Group className="mb-3" controlId="formPlaintextTitle">
-                <p><b>Revoke institute</b></p>
-                <Form.Label column >
-                    Institute address
-                </Form.Label>
-                <Col>
-                    <Form.Control  defaultValue="ethereum address" onChange={(e) => setInstituteAddress(e.target.value)} />
-                </Col>
-            </Form.Group>
+            <Alert variant="success" hidden={!alertOn} transition >
+                <Alert.Heading>Institute revoked !</Alert.Heading>
+                <p>at : {revokeTx}</p>
+                <hr/>
+                <div className="d-flex justify-content-end">
+                <Button onClick={() => handleAlertClose()} variant="outline-success">
+                    Close
+                </Button>
+                </div>
+            </Alert>
+            <Card>
+            <Card.Body>
+                <Card.Title>Revoke institute</Card.Title>
+                <Card.Text>
+                    <Form.Group className="mb-3" controlId="formPlaintextTitle">
+                        <Form.Label column >
+                            Institute address
+                        </Form.Label>
+                        <Col>
+                            <Form.Control  defaultValue="ethereum address" onChange={(e) => setInstituteAddress(e.target.value)} />
+                        </Col>
+                    </Form.Group>
+                    <Button variant="primary" onClick={() => revoke()}>revoke</Button>&nbsp;
 
-            <Button variant="primary" onClick={() => revoke()}>revoke</Button>&nbsp;
+                </Card.Text>
+            </Card.Body>
+            </Card>
         </div>
     )
 }
