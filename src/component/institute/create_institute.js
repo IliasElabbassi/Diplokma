@@ -15,12 +15,13 @@ function Create_institute(props) {
 
     async function add(){
         try{
-            const createTx = await diploma.addCreator(instituteAddress, name, country)
-            handleAlertShow()
-            console.log(createTx)
             console.log(name)
             console.log(country)
             console.log(instituteAddress)
+            const createTx = await diploma.addCreator(instituteAddress, name, country)
+            handleAlertShow()
+            setTx(createTx.hash)
+            console.log(createTx)
         }catch(err){
             console.error("[Create_Institute] add() : "+err)
         }

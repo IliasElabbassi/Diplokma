@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
 import {Form, Col, Button, Card, Alert} from 'react-bootstrap'
+import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
 
 function Revoke_institute(props) {
     const [diploma, setDiploma] = useState(undefined)
-    const [instituteAddress, setInstituteAddress] = useState(undefined)
+    const [instituteAddress, setInstituteAddress] = useState("")
     const [revokeTx, setTx] = useState(undefined)
     const [alertOn, setAlert] = useState(false)
 
@@ -13,7 +14,9 @@ function Revoke_institute(props) {
 
     async function revoke(){
         try{
-            const revokeTx = await diploma.deleteCreator(instituteAddress)
+            const correctAddress = ethers.utils.getAddress(instituteAddress.trim())
+            console.log(correctAddress)
+            const revokeTx = await diploma.deleteCreator(correctAddress)
             handleAlertShow()
             console.log(revokeTx)
         }catch(err){

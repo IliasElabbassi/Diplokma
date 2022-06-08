@@ -1,5 +1,6 @@
 import {Form, Col, Button, Card, Alert} from 'react-bootstrap'
 import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
 
 function Allow_institute(props) {
     const [diploma, setDiploma] = useState(undefined)
@@ -13,7 +14,9 @@ function Allow_institute(props) {
 
     async function allow(){
         try{
-            const allowTx = await diploma.allowCreator(instituteAddress)
+            const correctAddress = ethers.utils.getAddress(instituteAddress.trim())
+            console.log(correctAddress)
+            const allowTx = await diploma.allowCreator(correctAddress)
             handleAlertShow()
             setTx(allowTx.hash)
             console.log(allowTx)

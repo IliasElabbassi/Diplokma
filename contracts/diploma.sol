@@ -111,6 +111,7 @@ contract diploma {
         inst.country = _country;
         inst.name = _name;
         inst.allowed = true;
+        inst.instAddress = _creator;
 
         addressToInstitute[_creator] = inst;
         allowed_creator[_creator] = true;
