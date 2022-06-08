@@ -7,6 +7,8 @@ import getBlockchain from '../ethereum.js';
 import NavbarComponent from './Navbar'
 import Error404 from './404'
 
+import './style/app.css'
+
 function App() {
   const [address, setAddress] = useState(undefined)
   const [diploma, setDiploma] = useState(undefined)
@@ -45,11 +47,14 @@ function App() {
               <Route element={<Error404 />} />
           </Routes>
         </BrowserRouter>
-        <div>
-          <Col style={{textAlign: "right"}}>licence <a href='https://mit-license.org/'>MIT</a></Col>
-          <Col style={{textAlign: "right"}}>By Ilias El abbassi</Col>
-          <Col style={{textAlign: "right"}}>iliaselabbassi@outlook.fr</Col>
-          <Col style={{textAlign: "right"}}><a href='https://github.com/IliasElabbassi'>github</a></Col>
+
+        <div className='footer_app fixed-bottom'>
+          <div className='footer_ele'>
+            <Col style={{textAlign: "right"}}>licence <a href='https://mit-license.org/'>MIT</a></Col>
+            <Col style={{textAlign: "right"}}>By Ilias El abbassi</Col>
+            <Col style={{textAlign: "right"}}>iliaselabbassi@outlook.fr</Col>
+            <Col style={{textAlign: "right"}}><a href='https://github.com/IliasElabbassi'>github</a></Col>
+          </div>
         </div>
 
     </div>
