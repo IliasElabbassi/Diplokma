@@ -6,6 +6,7 @@ import getBlockchain from '../ethereum.js';
 
 import NavbarComponent from './Navbar'
 import Error404 from './404'
+import Diplomas from './diplomas'
 
 import './style/app.css'
 
@@ -44,7 +45,8 @@ function App() {
       <BrowserRouter>
         <NavbarComponent address={address} /> 
         <Routes>
-              <Route element={<Error404 />} />
+            <Route path='/diplomas' element={<Diplomas />} />
+            <Route element={<Error404 />} />
           </Routes>
         </BrowserRouter>
 
