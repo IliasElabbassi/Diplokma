@@ -36,8 +36,8 @@ function Manage_institute(props) {
                 </div>
 
             ) : (
-                <div className="offset-md-3">
-                    Only address 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 can manage institutes for the moment 
+                <div className="only_owner offset-md-3">
+                    Only address <b>0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266</b> can <u>manage institutes</u> for the moment 
                 </div>
             )
             }

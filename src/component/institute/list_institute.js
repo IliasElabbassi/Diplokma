@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ListGroup, Button} from 'react-bootstrap'
 
+import "../style/institute.css"
+
 function List_institute(props) {
     const [diploma, setDiploma] = useState(undefined)
     const [institues, setInstitues] = useState([])
@@ -27,7 +29,8 @@ function List_institute(props) {
     return (
         <div className="container">
             <Button variant="primary" onClick={() => retrieveInstitute()}>retrieve all institues</Button>&nbsp;
-            <ListGroup>
+            <ListGroup className="inst_list">
+                <ListGroup.Item variant="dark">Institute Name, Country, Ethereum Address, Rules</ListGroup.Item>
                 {
                     institues.map((inst, idx)=>{
                         return <ListGroup.Item variant="light">{inst[0]} , {inst[1]} , {inst[2]} , {(inst[3]===true)?("Allowed"):("not Allowed")}</ListGroup.Item>

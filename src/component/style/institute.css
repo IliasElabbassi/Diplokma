@@ -1,3 +1,11 @@
 .inst_manager {
     margin-top: 3%;
 }
+
+.inst_list {
+    margin-top: 10px;
+}
+
+.only_owner {
+    margin-top: 10px;
+}
