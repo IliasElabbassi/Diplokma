@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MDBCol } from "mdbreact";
 
-import "./style/diplomas.css"
+import "../style/diplomas.css"
 
 function Diplomas(props) {
     const [diploma, setDiploma] = useState(undefined)
