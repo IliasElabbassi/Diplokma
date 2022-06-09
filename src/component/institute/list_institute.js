@@ -29,14 +29,36 @@ function List_institute(props) {
     return (
         <div className="container">
             <Button variant="primary" onClick={() => retrieveInstitute()}>retrieve all institues</Button>&nbsp;
-            <ListGroup className="inst_list">
-                <ListGroup.Item variant="dark">Institute Name, Country, Ethereum Address, Rules</ListGroup.Item>
+            <div class="table-wrapper-scroll-y">
+            <table class="table table-bordered table-striped mb-0">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">institue Name</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">ethereum address</th>
+                    <th scope="col">Allowed</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {
+                    institues.map((inst, idx)=>{
+                        return <tr><th scope="row">{idx}</th><td>{inst[0]}</td><td>{inst[1]}</td><td>{inst[2]}</td><td>{(inst[3]===true)?("Allowed"):("not Allowed")}</td></tr>
+                    })
+                }
+                </tbody>
+            </table>
+
+            </div>
+            {/* <Button variant="primary" onClick={() => retrieveInstitute()}>retrieve all institues</Button>&nbsp;
+            <ListGroup>
                 {
                     institues.map((inst, idx)=>{
                         return <ListGroup.Item variant="light">{inst[0]} , {inst[1]} , {inst[2]} , {(inst[3]===true)?("Allowed"):("not Allowed")}</ListGroup.Item>
                     })
                 }
-            </ListGroup>
+            </ListGroup> */}
         </div>
     )
 }

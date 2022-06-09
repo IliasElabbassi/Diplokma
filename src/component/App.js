@@ -60,10 +60,11 @@ function App() {
 
         <div className='footer_app fixed-bottom'>
           <div className='footer_ele'>
-            <Col style={{textAlign: "right"}}>licence <a href='https://mit-license.org/'>MIT</a></Col>
-            <Col style={{textAlign: "right"}}>By Ilias El abbassi</Col>
-            <Col style={{textAlign: "right"}}>iliaselabbassi@outlook.fr</Col>
-            <Col style={{textAlign: "right"}}><a href='https://github.com/IliasElabbassi'>github</a></Col>
+            <Col style={{textAlign: "right"}}>
+                By Ilias El abbassi&nbsp;&nbsp;&nbsp;
+                <i>iliaselabbassi@outlook.fr</i>&nbsp;&nbsp;&nbsp;
+                <a href='https://github.com/IliasElabbassi'>github</a>
+              </Col>
           </div>
         </div>
 
