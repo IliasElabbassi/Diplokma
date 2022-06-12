@@ -3,6 +3,8 @@ import { MDBCol } from "mdbreact";
 
 import "../style/diplomas.css"
 
+import Diploma from "./diploma_card"
+
 function Diplomas(props) {
     const [diploma, setDiploma] = useState(undefined)
     const [diplomas_list, setDiplomasList] = useState([])
@@ -33,7 +35,9 @@ function Diplomas(props) {
                     (diplomas_list.length === 0)?(
                       <div className="no_diploma offset-md-5">No diplomas to display</div>
                     ) : (
-                        'should display the diploma'
+                        diplomas_list.map((diploma_info, idx)=>{
+                            return <Diploma info={diploma_info} />
+                        })
                     )
                 }
             </div>

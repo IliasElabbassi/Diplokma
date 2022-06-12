@@ -51,14 +51,6 @@ function List_institute(props) {
             </table>
 
             </div>
-            {/* <Button variant="primary" onClick={() => retrieveInstitute()}>retrieve all institues</Button>&nbsp;
-            <ListGroup>
-                {
-                    institues.map((inst, idx)=>{
-                        return <ListGroup.Item variant="light">{inst[0]} , {inst[1]} , {inst[2]} , {(inst[3]===true)?("Allowed"):("not Allowed")}</ListGroup.Item>
-                    })
-                }
-            </ListGroup> */}
         </div>
     )
 }
