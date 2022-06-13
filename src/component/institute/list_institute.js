@@ -6,6 +6,7 @@ import "../style/institute.css"
 function List_institute(props) {
     const [diploma, setDiploma] = useState(undefined)
     const [institues, setInstitues] = useState([])
+    
     useEffect(()=>{
         setDiploma(props.diploma)
     }, [props.diploma])
@@ -44,7 +45,7 @@ function List_institute(props) {
 
                 {
                     institues.map((inst, idx)=>{
-                        return <tr><th scope="row">{idx}</th><td>{inst[0]}</td><td>{inst[1]}</td><td>{inst[2]}</td><td>{(inst[3]===true)?("Allowed"):("not Allowed")}</td></tr>
+                        return <tr key={idx}><th scope="row">{idx}</th><td>{inst[0]}</td><td>{inst[1]}</td><td>{inst[2]}</td><td>{(inst[3]===true)?("Allowed"):("not Allowed")}</td></tr>
                     })
                 }
                 </tbody>

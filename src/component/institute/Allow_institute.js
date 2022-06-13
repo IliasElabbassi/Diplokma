@@ -40,7 +40,7 @@ function Allow_institute(props) {
                 </Button>
                 </div>
             </Alert>
-            <Card>
+            <Card className='shadow p-3 mb-5 bg-white rounded'>
             <Card.Body>
                 <Card.Title>Allow institute</Card.Title>
                 <Card.Text>

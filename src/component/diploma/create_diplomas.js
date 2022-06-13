@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {Form, Col, Row, Button, Card, Alert} from 'react-bootstrap'
+import { ethers } from "ethers";
 
 import "../style/diplomas.css"
 
 function Create_diploma(props) {
     const [diploma, setDiploma] = useState(undefined)
-    const [createInstTx, setTx] = useState(undefined)
+    const [createTx, setTx] = useState(undefined)
     const [alertOn, setAlert] = useState(false)
 
     const [title, setTitle] = useState(undefined)
@@ -23,7 +24,33 @@ function Create_diploma(props) {
 
     async function create(){
         try{
+            if(title == undefined || to == undefined || lastName == undefined || firstName == undefined || date == undefined ||
+                location == undefined || mention == undefined)
+            {
+                    console.error("[Create_diploma] create() : all inputs should be assigned")
+                    return
+            }
+            const correctAddress = ethers.utils.getAddress(to.trim())
+            console.log(correctAddress)
+            const createTx = await diploma.createDegree(
+                title,
+                correctAddress,
+                firstName,
+                lastName,
+                date,
+                location,
+                mention
+            )
+            setTx(createTx.hash)
             handleAlertShow()
+            console.log(title)
+            console.log(correctAddress)
+            console.log(firstName)
+            console.log(lastName)
+            console.log(date)
+            console.log(location)
+            console.log(mention)
+
         }catch(err){
             console.error("[Create_diploma] create() : "+err)
         }
@@ -36,7 +63,7 @@ function Create_diploma(props) {
         <div className="container">
             <Alert variant="success" hidden={!alertOn} transition >
                 <Alert.Heading>Degree Created !</Alert.Heading>
-                <p>at : {createInstTx}</p>
+                <p>at : {createTx}</p>
                 <hr/>
                 <div className="d-flex justify-content-end">
                 <Button onClick={() => handleAlertClose()} variant="outline-success">
@@ -46,7 +73,7 @@ function Create_diploma(props) {
             </Alert>
             <Row>
                 <Col md={7} className="offset-md-2">
-                    <Card className="create_diploma">
+                    <Card className="create_diploma shadow p-3 mb-5 bg-white rounded">
                         <Card.Body>
                             <Card.Title>Create degree</Card.Title>
                             <Card.Text>
@@ -61,19 +88,19 @@ function Create_diploma(props) {
                                         to
                                     </Form.Label>
                                     <Col>
-                                        <Form.Control  defaultValue="country" onChange={(e) => setTo(e.target.value)} />
+                                        <Form.Control  defaultValue="ethereum address" onChange={(e) => setTo(e.target.value)} />
                                     </Col>
                                     <Form.Label column >
                                         firstName
                                     </Form.Label>
                                     <Col>
-                                        <Form.Control  defaultValue="ethereum address" onChange={(e) => setFirstName(e.target.value)} />
+                                        <Form.Control  defaultValue="Firstname" onChange={(e) => setFirstName(e.target.value)} />
                                     </Col>
                                     <Form.Label column >
-                                        lastname
+                                        Lastname
                                     </Form.Label>
                                     <Col>
-                                        <Form.Control  defaultValue="ethereum address" onChange={(e) => setLastName(e.target.value)} />
+                                        <Form.Control  defaultValue="Lastname" onChange={(e) => setLastName(e.target.value)} />
                                     </Col>
                                     <Form.Label column >
                                         date
@@ -82,16 +109,16 @@ function Create_diploma(props) {
                                         <Form.Control type="date" defaultValue="ethereum address" onChange={(e) => setDate(e.target.value)} />
                                     </Col>
                                     <Form.Label column >
-                                        location
+                                        Location
                                     </Form.Label>
                                     <Col>
-                                        <Form.Control  defaultValue="ethereum address" onChange={(e) => setLocation(e.target.value)} />
+                                        <Form.Control  defaultValue="Location" onChange={(e) => setLocation(e.target.value)} />
                                     </Col>
                                     <Form.Label column >
                                         Mention
                                     </Form.Label>
                                     <Col>
-                                        <Form.Control  defaultValue="ethereum address" onChange={(e) => setMention(e.target.value)} />
+                                        <Form.Control  defaultValue="Mention" onChange={(e) => setMention(e.target.value)} />
                                     </Col>
                                 </Form.Group>
                                 <Button variant="primary" onClick={() => create()}>add</Button>&nbsp;

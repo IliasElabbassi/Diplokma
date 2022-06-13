@@ -21,7 +21,7 @@ function Manage_institute(props) {
         <div className="container">
             {
             (connectedAddress === "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")?(
-                <div className="inst_manager">
+                <div className="inst_manager ">
                     <Row>
                         <Col md={4}>
                             <Create_institute diploma={diploma} />

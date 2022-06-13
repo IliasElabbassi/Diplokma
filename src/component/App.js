@@ -9,6 +9,7 @@ import NavbarComponent from './Navbar'
 import Diplomas from './/diploma/diplomas'
 import Error404 from './404'
 import Create_diploma from './diploma/create_diplomas.js'
+import Home from './Home.js';
 
 import './style/app.css'
 
@@ -43,11 +44,13 @@ function App() {
     )
   }
   return (
-    <div className="container">
+    <div className="container shadow p-3 mb-5 bg-white rounded">
       <BrowserRouter>
         <NavbarComponent address={address} /> 
         <Routes>
-            <Route path='/diplomas' element={<Diplomas />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/Home" element={<Home />} />
+            <Route path='/diplomas' element={<Diplomas diploma={diploma} />} />
             <Route path='/managing/institute' element={<Manage_institute
                                                               diploma={diploma}
                                                               address={address} />} />
